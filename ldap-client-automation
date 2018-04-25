@@ -6,13 +6,12 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get install --y libnss-ldap libpam-ldap nslcd debconf-utils
 # install the debconf-utils GUI 
 
-wget https://raw.githubusercontent.com/carlosaguilar1928/LDAP-NTI/master/ldap-devconf
-# wget the raw debconf configuration files that were extrapolated from the manual configuration
+wget https://raw.githubusercontent.com/carlosaguilar1928/Monitoring-/master/ldap_debconf
+# wget the raw ldap_debconf configuration files that were extrapolated from the manual configuration
 
 while read line; do echo "$line" | debconf-set-selections; done < ldap_debconf
 
-Sed for compat
-sed for for ldap.conf
+sed -i 's/compat/compat ldap/g' /etc/nsswitch.conf 
 
 /etc/int.d/nscd restart
 
