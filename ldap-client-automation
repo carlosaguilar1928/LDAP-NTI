@@ -1,0 +1,20 @@
+#!/bin/bash
+
+sudo su
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get install --y libnss-ldap libpam-ldap nslcd debconf-utils
+# install the debconf-utils GUI 
+
+wget https://raw.githubusercontent.com/carlosaguilar1928/LDAP-NTI/master/ldap-devconf
+# wget the raw debconf configuration files that were extrapolated from the manual configuration
+
+while read line; do echo "$line" | debconf-set-selections; done < ldap_debconf
+
+Sed for compat
+sed for for ldap.conf
+
+/etc/int.d/nscd restart
+
+export DEBIAN_FRONTEND=interactive
+# this variable turns on/off the "ncurses" GUI from debconf
