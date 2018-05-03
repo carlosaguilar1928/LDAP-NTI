@@ -1,9 +1,8 @@
 #!/bin/bash
 
-sudo su
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get install -y libnss-ldap libpam-ldap nslcd debconf-utils
+apt-get install -y  libpam-ldap nscd 
 # install the debconf-utils GUI 
 
 wget https://raw.githubusercontent.com/carlosaguilar1928/Monitoring-/master/ldap_debconf
