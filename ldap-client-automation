@@ -13,7 +13,7 @@ while read line; do echo "$line" | debconf-set-selections; done < ldap_debconf
 
 sed -i 's/compat/compat ldap/g' /etc/nsswitch.conf 
 
-/etc/int.d/nscd restart
+/etc/init.d/nscd restart
 
 export DEBIAN_FRONTEND=interactive
 # this variable turns on/off the "ncurses" GUI from debconf
