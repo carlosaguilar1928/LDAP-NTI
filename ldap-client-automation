@@ -2,7 +2,7 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get install -y  libpam-ldap nscd 
+apt-get install -y libpam-ldap nscd 
 # install the debconf-utils GUI 
 
 wget https://raw.githubusercontent.com/carlosaguilar1928/Monitoring-/master/ldap_debconf
@@ -19,3 +19,6 @@ sed -i 's/base dc=example,dc=net/base dc=nti310,dc=local/g' /etc/ldap.conf
 
 export DEBIAN_FRONTEND=interactive
 # this variable turns on/off the "ncurses" GUI from debconf
+
+getent passwd | grep ed
+# verifies that ldapclient can communicate with server by getting a client configuration
