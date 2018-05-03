@@ -1,4 +1,6 @@
 #!/bin/bash
+yum -y install git
+git clone https://github.com/nic-instruction/hello-nti-310.git 
 
 yum -y install httpd
 yum -y install epel-release
@@ -9,7 +11,7 @@ systemctl start httpd
 
 sed -i 's,Require local,#Require local\n   Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
 
-cp NTI-310/config/config.php /etc/phpldapadmin.php
+cp hello-nti-310/config.php /etc/phpldapadmin.php
 chown ldap:apache /etc/phpldapadmin/config.php
 
 sytemctl restart httpd.service
