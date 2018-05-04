@@ -6,6 +6,9 @@ yum -y install httpd
 yum -y install epel-release
 yum -y install phpldapadmin
 
+yum install -y openldap-servers openldap-clients
+#installs ldap 
+
 systemctl enable httpd
 systemctl start httpd
 
