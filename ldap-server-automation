@@ -17,7 +17,11 @@ sed -i 's,Require local,#Require local\n   Require all granted,g' /etc/httpd/con
 cp hello-nti-310/config/config.php /etc/phpldapadmin.php
 chown ldap:apache /etc/phpldapadmin/config.php
 
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config 
+setenforce 0
 sytemctl restart httpd.service
+# turn off  Selinux and restart httpd, because Selinux actively blocks code to our php application. 
+#the above sed line is redundant with the setenforce 0 since they both do the same. But sed implementation is permanent. 
 
 echo "phpldapadmin is now up and running"
 echo "configuring ldap and ldapadmin"
@@ -41,8 +45,10 @@ dn: olcDatabase={2}hdb,cn=config
 changetype: modify
 replace: olcRootPW
 olcRootPW: $newhash" > db.ldif
+#here we insert shema information into a file called db.ldif
 
 ldapmodify -Y EXTERNAL -H ldapi:/// -f db.ldif
+# here we modify the schema of the ldap by loading the db.ldif
 
 echo 'dn: olcDatabase={1}monitor,cn=config
 changetype: modify
