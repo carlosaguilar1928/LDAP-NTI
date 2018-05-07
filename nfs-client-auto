@@ -24,7 +24,7 @@ showmount -e $10.142.0.10
 mkdir /mnt/test
 #make a mount point for the 'testing' nfs share
 
-echo "10.142.0.10:/var/nfsshare/testing	/mnt/test	nfs	defaults 0 0" " >> /etc/fstab
+echo "10.142.0.10:/var/nfsshare/testing	/mnt/test	nfs	defaults 0 0" >> /etc/fstab
 # when you are done , echo your mount/share configuration into the fstab file
 # this will mount the share on reboot; you should use your nfs server ip address not 10.128.0.4
 
