@@ -1,0 +1,26 @@
+chapters 10,11,12
+
+1) what is the fourth category of work?
+	Work in progress
+2) who calls Brent and why?
+	- usually other IT people who are having problems fixing something
+
+3) How do they decide to deal with Brent as a work bottleneck?
+	- they realize that everytime Brent fixes something without documenting it
+	he gets smarter and the team gets dumber. The deside to create a pool of 
+	level 3 engineers to handle the escalations and keep brent out of that pool. 
+	If needed the these engineers could have access to Brent on the condition that
+	Brent is not to touch the keyboard but only do shoulder surfing and tell people
+	what to type. If they can't document work there will be consequences. Also, they
+	plan on taking away his production access so that only the level 3 engineers are
+	able to perform. 
+
+4) why weren't 60% of the scheduled changes implemented
+	There were many reason from various people. Some explained that they Infrastructure
+	or SAN was not up to spec. Others due to the lack of personnel available to perform 
+	the change. And finally other had counted on Brent as an invaluable resource to perform
+	the change. 
+
+5) why couln't the front-end of the phoenix project code talk to the back-end? 
+	The code wouln't talk to the back-end because someone forgot to mention that the
+	operations team needed to open a firewall port in order to get it working 
