@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #first of all install the ldap client on the nfsclient machine
+wget https://raw.githubusercontent.com/carlosaguilar1928/LDAP-NTI/master/ldap-client-automation
 
 apt-get install -y nfs-client
 # install the nfs client in our machine
