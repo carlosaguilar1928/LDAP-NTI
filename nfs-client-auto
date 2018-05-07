@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#first of all install the ldap client on the nfsclient machine
+
+apt-get install -y nfs-client
+# install the nfs client in our machine
+
+showmount -e $
+#shows us where the available mounts on our remote server are
+#after the $ sign, insert the internal ip of our nfs server 
+
+mkdir /mnt/test
+#make a mount point for the 'testing' nfs share
+
+echo "10.128.0.4:/var/nfsshare/testing	/mnt/test	nfs	defaults 0 0"
+# when you are done , echo your mount/share configuration into the fstab file
+# this will mount the share on reboot; you should use your nfs server ip address not 10.128.0.4
+
+mount -a
+#execute this command to mount all the shares in your fstab file
+
+
+#test by changing direcotory into the /mnt/test directory and su'ing one of your ldap users
+# after su'ing the user perform and ls and notice that the user is the owner of the file
+# also the ldap group you added that user to, should be the owner of the group
+cd /mnt/test 
+su bob
+ls -l 
