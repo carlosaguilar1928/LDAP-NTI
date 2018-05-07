@@ -17,7 +17,7 @@ export DEBIAN_FRONTEND=interactive
 apt-get install -y nfs-client
 # install the nfs client in our machine
 
-showmount -e $
+showmount -e $10.142.0.10
 #shows us where the available mounts on our remote server are
 #after the $ sign, insert the internal ip of our nfs server 
 
