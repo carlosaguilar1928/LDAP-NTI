@@ -1,0 +1,14 @@
+Chapter 13,14,15
+
+1)	what problem do they solve by only permitting code rollouts twice a day?
+	They are rebooting all the front end servers every hour because they are kept being introduced to instabilities. 
+  Code rollouts twice a day will restrict all code changes to those affecting performance. 
+
+2)	why are they afraid of they auditors 
+	cvv codes are being stored in paper copies to help the customer transactions process effectively. However they are an automatic cardholder data breach and an automatic fine. Its even front-page news worthy. The auditors are currently in site and all that data needs to be disposed off properly. 
+
+3)	What is a NOC?
+	Network Operation Center:  which is a location where network monitoring and control or network management happens.
+
+4)	Why do Bill and Chris decide to meet once a week?
+
