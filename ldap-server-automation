@@ -100,3 +100,5 @@ ou: Group" > base.ldif
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
 
 systemctl restart httpd
+
+#web interface ipaddress/phpldapadmin
