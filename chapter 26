@@ -1,0 +1,17 @@
+1)What is the difference between continuous integration and continuous delivery?
+Continuous integration is the process of collaborating on a shared code base, merging disparate code changes into a version control system, and automatically creating and
+testing builds.
+Continuous delivery is the process of automatically deploying builds to
+nonproduction environments after the continuous integration process completes.
+
+2) What does continuous integration give programmers?  What does continuous delivery allow programmers to do?
+	With continuous integration members of a team integrate their code frequently. It removes the pain of reconciling code fragments.
+	With continuous delivery has the goal of deploying updated software to live systems. It allows programmers to embrace small releases and incremental changes to IT. 
+3) What does Automate end-to-end mean in this context?
+	If you plan to deploy code continuously to production should run fully unattended after being triggered by human. Building, Testing and deploying code without manual intervention to make reliable and reproducible updates. 
+4) What's the purpose of a dev, stage and prod server?
+	Development- environment is for testing infrastructure changes and checking for obvious failures. Is used by technical staff and it serves developers to integrate updates
+	Staging- Is used for manual and automated changes. Organizations call this the “test” environment. Testers, use this environment for to review new features and bug fixes. Also, can be used for penetration testing and other security checks. 
+	Production- where implementation of services for real users. 
+5) What is environment parity?
+	Keeping a sync method between environments. The purpose of the nonproduction or “lower” environments is to prepare and scrutinize changes of all types before they are made in production. Substantive differences among environments can result in unforeseen incompatibilities that might ultimately cause degraded performance, downtime, or even the destruction of data.
