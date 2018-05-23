@@ -20,7 +20,7 @@ cd ..
 #this finds this file and return the path to you.     ex. find / -name "settings.py" 
 vim /opt/myproject/myproject/settings.py
 
-sed -i '44.66 s/^/#/ ' 
+sed -i '44.66 s/^/#/ ' /opt/myproject/myproject/settings.py
 # This line inserts a # in all line between 44 thru 66. 
 # No global (g)  required since this will be only done in these lines. 
 
@@ -35,9 +35,11 @@ echo "DATABASES = {
         'HOST': '10.142.0.6',
         'PORT': '5432',
     }
-} > /opt/myproject/myproject/settings.py
+} >> /opt/myproject/myproject/settings.py
 
 #change the host, port, password. 
 #host would be the internal ip for your postgress
 #port is 5432
 #enter the password you created for the Postgress server. 
+
+sudo -u carlosaguilar1928 -E sh -c "source /opt/myproject/myproject/bin/activate && /opt/myproject/myproject/manage.py runserver 0.0.0.0:8000&"
