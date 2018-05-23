@@ -2,7 +2,7 @@
 
 gcloud init
 1
-"enter your project number here"
+"intense-reason-191902"
 
 yum install wget -y
 wget https://github.com/carlosaguilar1928/NTI-310/blob/master/postgressql-server
