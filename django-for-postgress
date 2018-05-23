@@ -20,13 +20,9 @@ cd ..
 #this finds this file and return the path to you.     ex. find / -name "settings.py" 
 vim /opt/myproject/myproject/settings.py
 
-#comment out the current DATABASE part and paste the new information  
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
- #   }
-#}
+sed -i '44.66 s/^/#/ ' 
+# This line inserts a # in all line between 44 thru 66. 
+# No global (g)  required since this will be only done in these lines. 
 
 #this following line must be inserted into the settings.py file either manually or thru echo. 
 #enter this into the settings.py file and edit it
