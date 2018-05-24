@@ -52,6 +52,6 @@ systemctl restart httpd
 
 #to test try the commands
 #tail -F /var/log/messages | grep startup 
-#systemctl status postgres
+#systemctl status postgresql
 #login ipaddress/phpPgAdmin  
 #username:postgres  password:postgres
