@@ -42,4 +42,4 @@ echo "DATABASES = {
 #port is 5432
 #enter the password you created for the Postgress server. 
 
-sudo -u carlosaguilar1928 -E sh -c "source /opt/myproject/myprojectenv/bin/activate"
+sudo -u carlosaguilar1928 -E sh -c "source /opt/myproject/myprojectenv/bin/activate && /opt/myproject/manage.py runserver 0.0.0.0:8000&"
