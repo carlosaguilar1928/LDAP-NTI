@@ -5,8 +5,8 @@ gcloud init
 "intense-reason-191902"
 
 yum install wget -y
-wget https://github.com/carlosaguilar1928/NTI-310/blob/master/postgressql-server
-wget https://github.com/carlosaguilar1928/NTI-310/blob/master/django-for-postgress
+https://raw.githubusercontent.com/carlosaguilar1928/NTI-310/master/postgressql-server
+https://raw.githubusercontent.com/carlosaguilar1928/NTI-310/master/django-for-postgress
 
 bash postgressql-server
 
