@@ -15,6 +15,8 @@ gcloud compute instances create ldapserver-auto	--metadata-from-file startup-scr
 
 
 ldapip=$(gcloud compute instances list | grep ldapserver-auto | awk '{print $4}')
-#gets ip from postgress server
+#gets ip from ldapserver-auto instance
 
-
+echo $ldapip >> ldaptest.txt
+#this command will allow you to ssh into the created instance and see this file created with the IP
+# it tests  your ldapip variable code
