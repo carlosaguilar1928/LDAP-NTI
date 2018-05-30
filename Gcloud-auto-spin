@@ -20,3 +20,5 @@ ldapip=$(gcloud compute instances list | grep ldapserver-auto | awk '{print $4}'
 echo $ldapip >> ldaptest.txt
 #this command will allow you to ssh into the created instance and see this file created with the IP
 # it tests  your ldapip variable code
+
+#in order for this code to run it needs to have API enable on the master server created during the instance creation 
