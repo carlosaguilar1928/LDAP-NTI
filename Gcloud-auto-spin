@@ -2,15 +2,19 @@
 
 gcloud init
 1
-"intense-reason-191902"
+intense-reason-191902
 
 yum install wget -y
-https://raw.githubusercontent.com/carlosaguilar1928/NTI-310/master/postgressql-server
-https://raw.githubusercontent.com/carlosaguilar1928/NTI-310/master/django-for-postgress
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-server-automation
+# install wget and download the script from ldap 
 
-bash postgressql-server
+gcloud compute instances create ldapserver-auto	--metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform 
+# this line intruduces the flags for the instance creation 
+# in this case the --metadataflag point to my script "ldap-server-automation in my working directory 
+# the --scopes flag enable other flags, in other words it enables them
 
-djangoip=$(gcloud compute instances list | grep postgres | awk '{print $4}')
+
+ldapip=$(gcloud compute instances list | grep ldapserver-auto | awk '{print $4}')
 #gets ip from postgress server
 
-bash django-for-postgress
+
