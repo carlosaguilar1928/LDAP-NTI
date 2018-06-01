@@ -50,3 +50,5 @@ python manage.py runserver 0.0.0.0:8000
 #enter the password you created for the Postgress server. 
 
 sudo -u carlosaguilar1928 -E sh -c "source /opt/myproject/myprojectenv/bin/activate && /opt/myproject/manage.py runserver 0.0.0.0:8000&"
+
+#http://server_domain_or_IP:8000 --> how to view if it worked
