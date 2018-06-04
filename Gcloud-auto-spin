@@ -4,15 +4,72 @@ gcloud init
 1
 intense-reason-191902
 
+
+# install wget and download the scripts in raw format from github 
 yum install wget -y
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-server-automation
-# install wget and download the script from ldap 
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-client-automation
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-server-automation
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-client-auto
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/postgressql-server
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/django-for-postgress
 
-gcloud compute instances create ldapserver-auto	--metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform 
+gcloud compute instances create ldapserver	\
+    --metadata-from-file startup-script=/ldap-server-automation \
+    --image centos-7 \
+    --tags http-server \
+    --zone us-east1-b \
+    --machine-type f1-micro \
+    --scopes cloud-platform \
+    --image-project intense-reason-191902 \
+    
 # this line intruduces the flags for the instance creation 
 # in this case the --metadataflag point to my script "ldap-server-automation in my working directory 
 # the --scopes flag enable other flags, in other words it enables them
+gcloud compute instances create ldapclient	\
+    --metadata-from-file startup-script=/ldap-client-automation \
+    --image Ubuntu 16.04 LTS \
+    --tags http-server \
+    --zone us-east1-b \
+    --machine-type f1-micro \
+    --scopes cloud-platform \
+    --image-project intense-reason-191902 \ 
 
+gcloud compute instances create nfsserver	\
+    --metadata-from-file startup-script=/nfs-server-automation \
+    --image centos-7 \
+    --tags http-server \
+    --zone us-east1-b \
+    --machine-type f1-micro \
+    --scopes cloud-platform \
+    --image-project intense-reason-191902 \
+
+gcloud compute instances create nfsclient\
+    --metadata-from-file startup-script=/nfs-client-auto
+    --image Ubuntu 16.04 LTS \
+    --zone us-east1-b \
+    --machine-type f1-micro \
+    --scopes cloud-platform \
+    --image-project intense-reason-191902 \
+    
+    
+gcloud compute instances create postgressql-server	\
+    --metadata-from-file startup-script=/postgressql-server \
+    --image centos-7 \
+    --tags http-server \
+    --zone us-east1-b \
+    --machine-type f1-micro \
+    --scopes cloud-platform \
+    --image-project intense-reason-191902 \
+
+gcloud compute instances create django-server	\
+    --metadata-from-file startup-script=/django-for-postgress \
+    --image centos-7 \
+    --tags http-server \
+    --zone us-east1-b \
+    --machine-type f1-micro \
+    --scopes cloud-platform \
+    --image-project intense-reason-191902 \
 
 ldapip=$(gcloud compute instances list | grep ldapserver-auto | awk '{print $4}')
 #gets ip from ldapserver-auto instance
