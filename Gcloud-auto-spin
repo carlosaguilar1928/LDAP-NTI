@@ -14,68 +14,54 @@ wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-c
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/postgressql-server
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/django-for-postgress
 
-gcloud compute instances create ldapserver	\
-    --metadata-from-file startup-script=/ldap-server-automation \
-    --image centos-7 \
-    --tags http-server \
-    --zone us-east1-b \
-    --machine-type f1-micro \
-    --scopes cloud-platform \
-    --image-project intense-reason-191902 \
-    
-# this line intruduces the flags for the instance creation 
-# in this case the --metadataflag point to my script "ldap-server-automation in my working directory 
-# the --scopes flag enable other flags, in other words it enables them
-gcloud compute instances create ldapclient	\
-    --metadata-from-file startup-script=/ldap-client-automation \
-    --image Ubuntu 16.04 LTS \
-    --tags http-server \
-    --zone us-east1-b \
-    --machine-type f1-micro \
-    --scopes cloud-platform \
-    --image-project intense-reason-191902 \ 
+# create firewall rules
+echo "Creating firewall-rules..."
+gcloud compute firewall-rules create allow-http --description "Incoming http allowed." \
+    --allow tcp:80
 
-gcloud compute instances create nfsserver	\
-    --metadata-from-file startup-script=/nfs-server-automation \
-    --image centos-7 \
-    --tags http-server \
-    --zone us-east1-b \
-    --machine-type f1-micro \
-    --scopes cloud-platform \
-    --image-project intense-reason-191902 \
+gcloud compute firewall-rules create allow-nrpe --description "Allow nrpe-server communication." \
+    --allow tcp:5666
 
-gcloud compute instances create nfsclient\
-    --metadata-from-file startup-script=/nfs-client-auto
-    --image Ubuntu 16.04 LTS \
-    --zone us-east1-b \
-    --machine-type f1-micro \
-    --scopes cloud-platform \
-    --image-project intense-reason-191902 \
-    
-    
-gcloud compute instances create postgressql-server	\
-    --metadata-from-file startup-script=/postgressql-server \
-    --image centos-7 \
-    --tags http-server \
-    --zone us-east1-b \
-    --machine-type f1-micro \
-    --scopes cloud-platform \
-    --image-project intense-reason-191902 \
+gcloud compute firewall-rules create allow-ldap --description "Incoming ldap allowed." \
+    --allow tcp:636
 
-gcloud compute instances create django-server	\
-    --metadata-from-file startup-script=/django-for-postgress \
-    --image centos-7 \
-    --tags http-server \
-    --zone us-east1-b \
-    --machine-type f1-micro \
-    --scopes cloud-platform \
-    --image-project intense-reason-191902 \
+gcloud compute firewall-rules create allow-postgresql --description "Posgresql allowed." \
+    --allow tcp:5432
 
-ldapip=$(gcloud compute instances list | grep ldapserver-auto | awk '{print $4}')
-#gets ip from ldapserver-auto instance
+gcloud compute firewall-rules create allow-https --description "Incoming https allowed." \
+    --allow tcp:443
 
-echo $ldapip >> ldaptest.txt
-#this command will allow you to ssh into the created instance and see this file created with the IP
-# it tests  your ldapip variable code
+gcloud compute firewall-rules create allow-django --description "Django test server connection allowed." \
+    --allow tcp:8000
 
-#in order for this code to run it needs to have API enable on the master server created during the instance creation 
+gcloud compute firewall-rules create allow-ftp --description "FTP Allowed." \
+    --allow tcp:21
+ 
+ 
+# launching ldap servers     
+gcloud compute instances create ldapserver --metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
+#launching ldap client 
+gcloud compute instances create ldapclient	--metadata-from-file startup-script=/ldap-client-automation --image Ubuntu 16.04 LTS --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+# launching nfs server   
+gcloud compute instances create nfsserver --metadata-from-file startup-script=/nfs-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
+# launching nfs client     
+gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image Ubuntu 16.04 LTS --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+#launching postgres database       
+gcloud compute instances create postgressql-db --metadata-from-file startup-script=/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
+#launching django  
+gcloud compute instances create django-server --metadata-from-file startup-script=/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+
+
+# resolving dependencies nagios 
+postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $11}')
+echo $postgresip >> realpostgresip.txt
+scp realpostgresip.txt carlosaguilar1928@django-server:/home
+echo "realpostgresip.txt" > postgresip=$echo | sed -i 's/a.b.c.d/$postgresip/g' /opt/myproject/myproject/settings.py
+
+# resolving dependencies LDAP
+#ldapip=$(gcloud compute instances list | grep ldapserver | awk '{print $11}')      #not sure about this
+#echo $ldapip >> realldapip.txt
+for server in $(gcloud compute intances list | awk '{print $1}'); do scp filename carlosaguilar1928@ldapclient:/home && /
+scp filename carlosaguilar1928@nfsserver:/home && scp filename carlosaguilar1928@nfsclient:/home ; done
+
+
