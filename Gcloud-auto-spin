@@ -4,16 +4,6 @@ gcloud init
 1
 intense-reason-191902
 
-
-# install wget and download the scripts in raw format from github 
-yum install wget -y
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-server-automation
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-client-automation
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-server-automation
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-client-auto
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/postgressql-server
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/django-for-postgress
-
 # create firewall rules
 echo "Creating firewall-rules..."
 gcloud compute firewall-rules create allow-http --description "Incoming http allowed." \
@@ -36,6 +26,16 @@ gcloud compute firewall-rules create allow-django --description "Django test ser
 
 gcloud compute firewall-rules create allow-ftp --description "FTP Allowed." \
     --allow tcp:21
+
+
+# install wget and download the scripts in raw format from github 
+yum install wget -y     
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-server-automation
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-client-automation
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-server-automation
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-client-auto
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/postgressql-server
+wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/django-for-postgress
  
  
 # launching ldap servers     
@@ -61,7 +61,7 @@ echo "realpostgresip.txt" > postgresip=$echo | sed -i 's/a.b.c.d/$postgresip/g' 
 # resolving dependencies LDAP
 #ldapip=$(gcloud compute instances list | grep ldapserver | awk '{print $11}')      #not sure about this
 #echo $ldapip >> realldapip.txt
-for server in $(gcloud compute intances list | awk '{print $1}'); do scp filename carlosaguilar1928@ldapclient:/home && /
-scp filename carlosaguilar1928@nfsserver:/home && scp filename carlosaguilar1928@nfsclient:/home ; done
+for server in $(gcloud compute intances list | awk '{print $1}'); do scp realldapip.txt carlosaguilar1928@ldapclient:/home && /
+scp realldapip.txt carlosaguilar1928@nfsserver:/home && scp realldapip.txt carlosaguilar1928@nfsclient:/home ; done
 
 
