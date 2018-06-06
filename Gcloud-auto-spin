@@ -31,8 +31,8 @@ wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/djang
  
 #step 3. launching ldap and nfs servers   
 echo "LAUNCHING LDAP/NFS IN 3-2-1.. HEREE WEE GOOO" 
-gcloud compute instances create ldapserver --metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902   
-gcloud compute instances create nfsserver --metadata-from-file startup-script=/nfs-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
+gcloud compute instances create ldapserver --metadata-from-file startup-script=/home/carlosaguilar1928/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902   
+gcloud compute instances create nfsserver --metadata-from-file startup-script=/home/carlosaguilar1928/nfs-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
 
 #step 4. resolving dependencies for ldap and nfs
 echo "Resolving Dependencies LDAP...AWESOMEEE" 
@@ -46,11 +46,11 @@ sleep 2
 
 # step 5. launching nfs and ldap client   
 echo "NFS AND LDAP CLIENTS ARE ALWAYS RIGHT...YAAAYY!!!"
-gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image-family ubuntu-1604-lts --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+gcloud compute instances create nfsclient --metadata-from-file startup-script=/home/carlosaguilar1928/nfs-client-auto --image-family ubuntu-1604-lts --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
 # step 6. launching postgres database 
 echo "launching postgres... FIRE IN THE HOLEEEE" 
-gcloud compute instances create postgressql-db --metadata-from-file startup-script=/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
+gcloud compute instances create postgressql-db --metadata-from-file startup-script=/home/carlosaguilar1928/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
 
 # step 7. resolving dependencies for django
 echo "POSGRES HANDS UP, AND PUT YOUR IP WHERE I CAN SEE IT!!!"  
@@ -60,7 +60,7 @@ sleep 2
 
 # step 8. launching django
 echo "D-J-A-N-G-O the D is silent!!!" 
-gcloud compute instances create django-server --metadata-from-file startup-script=/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+gcloud compute instances create django-server --metadata-from-file startup-script=/home/carlosaguilar1928/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
 
 
