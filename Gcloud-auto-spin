@@ -39,9 +39,9 @@ echo "Resolving Dependencies LDAP...AWESOMEEE"
     #ldapip=(gcloud compute instances list | grep ldapserver)
     #echo $ldapid
 ldapip=$(gcloud compute instances list | grep ldap-server  | awk '{print $4}')
-sed -i 's/a.b.c.d/$ldapip/g' /ldap-server-automation.sh
+sed -i 's/a.b.c.d/$ldapip/g' /home/carlosaguilar1928/nfs-client-auto
 nfsip=$(gcloud compute instances list | grep nfs-server  | awk '{print $4}')
-sed -i 's/1.2.3.4/$nfsip/g' /nfs-client-auto.sh
+sed -i 's/1.2.3.4/$nfsip/g' /home/carlosaguilar1928/nfs-client-auto
 sleep 2
 
 # step 5. launching nfs and ldap client   
@@ -55,7 +55,7 @@ gcloud compute instances create postgresql-db --image-family centos-7 --image-pr
 # step 7. resolving dependencies for django
 echo "POSGRES HANDS UP, AND PUT YOUR IP WHERE I CAN SEE IT!!!"  
 postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $4}')
-sed -i 's/a.b.c.d/$postgresip/g' /django-for-postgress.sh
+sed -i 's/a.b.c.d/$postgresip/g' /home/carlosaguialr1928/django-for-postgress.sh
 sleep 2
 
 # step 8. launching django
