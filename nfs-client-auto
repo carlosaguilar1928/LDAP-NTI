@@ -22,11 +22,11 @@ showmount -e $1.2.3.4
 #after the $ sign, insert the internal ip of our nfs server 
 
 mkdir /mnt/test
-#make a mount point for the 'testing' nfs share
+#make a mount point for the 'test' nfs share
 
 echo "1.2.3.4:/var/nfsshare/testing	/mnt/test	nfs	defaults 0 0" >> /etc/fstab
 # when you are done , echo your mount/share configuration into the fstab file
-# this will mount the share on reboot; you should use your nfs server ip address not 10.128.0.4
+# this will mount the share on reboot; you should use your nfs server ip address not 1.2.3.4
 
 mount -a
 #execute this command to mount all the shares in your fstab file
