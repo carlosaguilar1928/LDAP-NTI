@@ -41,26 +41,34 @@ wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/djang
 gcloud compute instances create ldapserver --metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
 # launching nfs server   
 gcloud compute instances create nfsserver --metadata-from-file startup-script=/nfs-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
-# launching nfs and ldap client     
-gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image-family ubuntu-1604-lts --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
-#launching postgres database       
-gcloud compute instances create postgressql-db --metadata-from-file startup-script=/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
-#launching django  
-gcloud compute instances create django-server --metadata-from-file startup-script=/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
+#resolving dependencies for ldap
+    #ldapip=(gcloud compute instances list | grep ldapserver)
+    #echo $ldapid
+ldapip=$(gcloud compute instances list | grep ldapserver  | awk '{print $11}')
+sed -i 's/a.b.c.d/$ldapip/g' /ldap-server-automation.sh
+nfsip=$(gcloud compute instances list | grep nfsserver  | awk '{print $11}')
+sed -i 's/1.2.3.4/$nfsip/g' /nfs-client-auto.sh
 sleep 2
 
-# resolving dependencies nagios 
-postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $11}')
-echo $postgresip >> realpostgresip.txt
-scp realpostgresip.txt carlosaguilar1928@django-server:/home
-echo "realpostgresip.txt" > postgresip=$echo 
-sed -i 's/a.b.c.d/$postgresip/g' /opt/myproject/myproject/settings.py
+# launching nfs and ldap client     
+gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image-family ubuntu-1604-lts --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
-# resolving dependencies LDAP
-#ldapip=$(gcloud compute instances list | grep ldapserver | awk '{print $11}')      #not sure about this
-#echo $ldapip >> realldapip.txt
-for server in $(gcloud compute intances list | awk '{print $1}'); do scp realldapip.txt carlosaguilar1928@ldapclient:/home && /
-scp realldapip.txt carlosaguilar1928@nfsserver:/home && scp realldapip.txt carlosaguilar1928@nfsclient:/home ; done
+# launching postgres database       
+gcloud compute instances create postgressql-db --metadata-from-file startup-script=/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
+
+# resolving dependencies django
+postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $11}')
+sed -i 's/a.b.c.d/$postgresip/g' /django-for-postgress.sh
+sleep 2
+
+# launching django  
+gcloud compute instances create django-server --metadata-from-file startup-script=/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+
+
+
+
+
+
 
 
