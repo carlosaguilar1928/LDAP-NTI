@@ -31,7 +31,6 @@ gcloud compute firewall-rules create allow-ftp --description "FTP Allowed." \
 # install wget and download the scripts in raw format from github 
 yum install wget -y     
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-server-automation
-wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-client-automation
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-server-automation
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-client-auto
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/postgressql-server
@@ -40,12 +39,10 @@ wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/djang
  
 # launching ldap servers     
 gcloud compute instances create ldapserver --metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
-#launching ldap client 
-gcloud compute instances create ldapclient	--metadata-from-file startup-script=/ldap-client-automation --image Ubuntu 16.04 LTS --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 # launching nfs server   
 gcloud compute instances create nfsserver --metadata-from-file startup-script=/nfs-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
-# launching nfs client     
-gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image Ubuntu 16.04 LTS --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
+# launching nfs and ldap client     
+gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image-family ubuntu-1604-lts --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 #launching postgres database       
 gcloud compute instances create postgressql-db --metadata-from-file startup-script=/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
 #launching django  
