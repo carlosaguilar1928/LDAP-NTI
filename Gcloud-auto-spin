@@ -4,8 +4,8 @@ gcloud init
 1
 intense-reason-191902
 
-# create firewall rules
-echo "Creating firewall-rules..."
+#step 1. create firewall rules
+echo "firewall-rules... WOOHOO"
 gcloud compute firewall-rules create allow-http --description " allow http." \
     --allow tcp:80
 gcloud compute firewall-rules create allow-https --description "Allow https." \
@@ -19,8 +19,8 @@ gcloud compute firewall-rules create allow-postgresql --description "Allow Postg
 gcloud compute firewall-rules create allow-django --description "Django test server connection allowed." \
     --allow tcp:8000
 
-
-# install wget and download the scripts in raw format from github 
+#step 2. install wget and download the scripts in raw format from github  
+echo "What you see is what you WGET"
 yum install wget -y     
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/ldap-server-automation
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/nfs-server-automation
@@ -29,12 +29,13 @@ wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/postg
 wget https://raw.githubusercontent.com/carlosaguilar1928/My-NTI-310/master/django-for-postgress
  
  
-# launching ldap servers     
-gcloud compute instances create ldapserver --metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
-# launching nfs server   
+#step 3. launching ldap and nfs servers   
+echo "LAUNCHING LDAP/NFS IN 3-2-1.. HEREE WEE GOOO" 
+gcloud compute instances create ldapserver --metadata-from-file startup-script=/ldap-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902   
 gcloud compute instances create nfsserver --metadata-from-file startup-script=/nfs-server-automation --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
 
-#resolving dependencies for ldap
+#step 4. resolving dependencies for ldap and nfs
+echo "Resolving Dependencies LDAP...AWESOMEEE" 
     #ldapip=(gcloud compute instances list | grep ldapserver)
     #echo $ldapid
 ldapip=$(gcloud compute instances list | grep ldapserver  | awk '{print $11}')
@@ -43,18 +44,22 @@ nfsip=$(gcloud compute instances list | grep nfsserver  | awk '{print $11}')
 sed -i 's/1.2.3.4/$nfsip/g' /nfs-client-auto.sh
 sleep 2
 
-# launching nfs and ldap client     
+# step 5. launching nfs and ldap client   
+echo "NFS AND LDAP CLIENTS ARE ALWAYS RIGHT...YAAAYY!!!"
 gcloud compute instances create nfsclient --metadata-from-file startup-script=/nfs-client-auto --image-family ubuntu-1604-lts --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
-# launching postgres database       
+# step 6. launching postgres database 
+echo "launching postgres... FIRE IN THE HOLEEEE" 
 gcloud compute instances create postgressql-db --metadata-from-file startup-script=/postgressql-server --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902 
 
-# resolving dependencies for django
+# step 7. resolving dependencies for django
+echo "POSGRES HANDS UP, AND PUT YOUR IP WHERE I CAN SEE IT!!!"  
 postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $11}')
 sed -i 's/a.b.c.d/$postgresip/g' /django-for-postgress.sh
 sleep 2
 
-# launching django  
+# step 8. launching django
+echo "D-J-A-N-G-O the D is silent!!!" 
 gcloud compute instances create django-server --metadata-from-file startup-script=/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
 
