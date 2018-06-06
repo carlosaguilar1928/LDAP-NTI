@@ -51,12 +51,14 @@ gcloud compute instances create postgressql-db --metadata-from-file startup-scri
 #launching django  
 gcloud compute instances create django-server --metadata-from-file startup-script=/django-for-postgress --image centos-7 --tags http-server --zone us-east1-b --machine-type f1-micro --scopes cloud-platform --image-project intense-reason-191902
 
+sleep 2
 
 # resolving dependencies nagios 
 postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $11}')
 echo $postgresip >> realpostgresip.txt
 scp realpostgresip.txt carlosaguilar1928@django-server:/home
-echo "realpostgresip.txt" > postgresip=$echo | sed -i 's/a.b.c.d/$postgresip/g' /opt/myproject/myproject/settings.py
+echo "realpostgresip.txt" > postgresip=$echo 
+sed -i 's/a.b.c.d/$postgresip/g' /opt/myproject/myproject/settings.py
 
 # resolving dependencies LDAP
 #ldapip=$(gcloud compute instances list | grep ldapserver | awk '{print $11}')      #not sure about this
