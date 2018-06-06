@@ -38,9 +38,9 @@ gcloud compute instances create nfsserver --metadata-from-file startup-script=/n
 echo "Resolving Dependencies LDAP...AWESOMEEE" 
     #ldapip=(gcloud compute instances list | grep ldapserver)
     #echo $ldapid
-ldapip=$(gcloud compute instances list | grep ldapserver  | awk '{print $11}')
+ldapip=$(gcloud compute instances list | grep ldapserver  | awk '{print $4}')
 sed -i 's/a.b.c.d/$ldapip/g' /ldap-server-automation.sh
-nfsip=$(gcloud compute instances list | grep nfsserver  | awk '{print $11}')
+nfsip=$(gcloud compute instances list | grep nfsserver  | awk '{print $4}')
 sed -i 's/1.2.3.4/$nfsip/g' /nfs-client-auto.sh
 sleep 2
 
@@ -54,7 +54,7 @@ gcloud compute instances create postgressql-db --metadata-from-file startup-scri
 
 # step 7. resolving dependencies for django
 echo "POSGRES HANDS UP, AND PUT YOUR IP WHERE I CAN SEE IT!!!"  
-postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $11}')
+postgresip=$(gcloud compute instances list | grep posgressql-db  | awk '{print $4}')
 sed -i 's/a.b.c.d/$postgresip/g' /django-for-postgress.sh
 sleep 2
 
