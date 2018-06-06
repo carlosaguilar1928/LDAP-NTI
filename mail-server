@@ -17,8 +17,8 @@ cp /etc/exim/exim.conf{,.orig}
 
 sed -i 's/primary_hostname =/primary_hostname = mail.mydomain.com/g' /etc/exim/exim.conf
 sed -i 's/domainlist local_domains = @ : localhost : localhost.localdomain/domainlist local_domains = @ : mydomain.com/g' /etc/exim/exim.conf
-sed -i 's/tls_certificate = /etc/pki/tls/certs/exim.pem/tls_certificate = /etc/ssl/mail.mydomain.com.crt/g' /etc/exim/exim.conf
-sed -i 's/tls_privatekey = /etc/pki/tls/private/exim.pem/tls_privatekey = /etc/ssl/mail.mydomain.com.key/g' /etc/exim/exim.conf
+sed -i 's;tls_certificate = /etc/pki/tls/certs/exim.pem;tls_certificate = /etc/ssl/mail.mydomain.com.crt;g' /etc/exim/exim.conf
+sed -i 's;tls_privatekey = /etc/pki/tls/private/exim.pem;tls_privatekey = /etc/ssl/mail.mydomain.com.key;g' /etc/exim/exim.conf
 sed -i 's/auth_advertise_hosts =/auth_advertise_hosts = */g' /etc/exim/exim.conf
 
 #edit the transport section on /etc/exim/exim.conf
