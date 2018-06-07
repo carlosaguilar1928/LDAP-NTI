@@ -6,20 +6,22 @@ yum -y install httpd
 yum -y install epel-release
 yum -y install phpldapadmin
 
-yum install -y openldap-servers openldap-clients
 #installs ldap 
+yum install -y openldap-servers openldap-clients
 
 systemctl enable httpd
 systemctl start httpd
 
+# edit the apache settings file to allow ldap access thru the web gui
 sed -i 's,Require local,#Require local\n   Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
 sed -i 's/Allow from 127.0.0.1/Allow from all/g' /etc/httpd/conf.d/phpldapadmin.conf
 cp hello-nti-310/config/config.php /etc/phpldapadmin.php
 chown ldap:apache /etc/phpldapadmin/config.php
 
+# turn off selinux since it messes with httpd
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config 
 setenforce 0
-sytemctl restart httpd.service
+systemctl restart httpd
 # turn off  Selinux and restart httpd, because Selinux actively blocks code to our php application. 
 #the above sed line is redundant with the setenforce 0 since they both do the same. But sed implementation is permanent. 
 
@@ -99,6 +101,5 @@ ou: Group" > base.ldif
 
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
 
-systemctl restart httpd
 
 #web interface ipaddress/phpldapadmin
