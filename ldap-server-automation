@@ -13,7 +13,7 @@ systemctl enable httpd
 systemctl start httpd
 
 sed -i 's,Require local,#Require local\n   Require all granted,g' /etc/httpd/conf.d/phpldapadmin.conf
-
+sed -i 's/Allow from 127.0.0.1/Allow from all/g' /etc/httpd/conf.d/phpldapadmin.conf
 cp hello-nti-310/config/config.php /etc/phpldapadmin.php
 chown ldap:apache /etc/phpldapadmin/config.php
 
