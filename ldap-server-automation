@@ -102,4 +102,6 @@ ou: Group" > base.ldif
 ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admin_pass
 
 
-#web interface ipaddress/phpldapadmin
+# web interface ipaddress/phpldapadmin
+# password is stored in /root/ldap_admin_pass
+
