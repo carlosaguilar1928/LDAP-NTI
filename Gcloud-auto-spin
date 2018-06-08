@@ -46,7 +46,8 @@ sleep 2
 
 # step 5. launching nfs and ldap client   
 echo "NFS AND LDAP CLIENTS ARE ALWAYS RIGHT...YAAAYY!!!"
-gcloud compute instances create client-machine --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --machine-type f1-micro --metadata-from-file startup-script=/home/carlosaguilar1928/nfs-client-auto 
+gcloud compute instances create client-01 --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --machine-type f1-micro --metadata-from-file startup-script=/home/carlosaguilar1928/nfs-client-auto 
+gcloud compute instances create client-02 --image-family ubuntu-1604-lts --image-project ubuntu-os-cloud --machine-type f1-micro --metadata-from-file startup-script=/home/carlosaguilar1928/nfs-client-auto 
 
 # step 6. launching postgres database 
 echo "launching postgres... FIRE IN THE HOLEEEE" 
