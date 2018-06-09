@@ -19,7 +19,7 @@ systemctl start httpd
 #create the settings via an echo line instead of manually
 echo -e "CREATE DATABASE myproject;
 \n
-CREATE USER myprojectuser WITH PASSWORD 'password';
+CREATE USER myprojectuser WITH PASSWORD 'postgres';
 \n
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
 \n
@@ -27,7 +27,7 @@ ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
 \n
 ALTER ROLE myprojectuser SET timezone TO 'UTC';
 \n
-ALTER USER postgres WITH PASSWORD 'letmein';
+ALTER USER postgres WITH PASSWORD 'postgres';
 GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;" > sqlfile.sql
 
 # this line changes user to "postgress"
