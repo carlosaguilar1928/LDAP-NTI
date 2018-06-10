@@ -104,4 +104,5 @@ ldapadd -x -W -D "cn=ldapadm,dc=nti310,dc=local" -f base.ldif -y /root/ldap_admi
 
 # web interface ipaddress/phpldapadmin
 # password is stored in /root/ldap_admin_pass
+# Use [cat /root/ldap_admin_pass] to retrieve the password for use in the web interface.
 
