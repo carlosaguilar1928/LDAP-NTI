@@ -4,6 +4,7 @@ yum install -y nfs-utils
 #installs nfs-utils for our server
 
 # create a directory structure called /nfsshare
+# these directories are the ones you can share on the network
 mkdir /var/nfsshare
 mkdir /var/nfsshare/devstuff
 mkdir /var/nfsshare/testing
