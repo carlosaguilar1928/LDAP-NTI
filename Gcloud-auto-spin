@@ -4,21 +4,6 @@ gcloud init
 1
 intense-reason-191902
 
-#step 1. create firewall rules
-echo "firewall-rules... WOOHOO"
-gcloud compute firewall-rules create allow-http --description " allow http." \
-    --allow tcp:80
-gcloud compute firewall-rules create allow-https --description "Allow https." \
-    --allow tcp:443
-gcloud compute firewall-rules create allow-nrpe --description "Allow nrpe-server communication." \
-    --allow tcp:5666
-gcloud compute firewall-rules create allow-ldap --description "Allow ldap allowed." \
-    --allow tcp:636
-gcloud compute firewall-rules create allow-postgresql --description "Allow Postgresql." \
-    --allow tcp:5432
-gcloud compute firewall-rules create allow-django --description "Django test server connection allowed." \
-    --allow tcp:8000
-
 #step 2. install wget and download the scripts in raw format from github  
 echo "installing git"
 yum install git -y    
@@ -26,7 +11,7 @@ git clone https://github.com/carlosaguilar1928/NTI320-FINAL
 
 
 #step 3. launching ldap and nfs servers   
-cho "######## NTI-310 Deployments#############" 
+echo "######## NTI-310 Deployments#############" 
 
 gcloud compute instances create ldap-server --image-family centos-7 --image-project centos-cloud --machine-type f1-micro --tags http-server  --metadata-from-file startup-script=/home/carlosaguilar1928/NTI320-FINAL/ldap-server 
 gcloud compute instances create nfs-server --image-family centos-7 --image-project centos-cloud --machine-type f1-micro  --tags http-server --metadata-from-file startup-script=/home/carlosaguilar1928/NTI320-FINAL/nfs-server
